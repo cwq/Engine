@@ -43,7 +43,7 @@ public class CutRectangle extends MultiObject {
 	private final float LEAST_HALFW = EDGE_L;
 	private final float LEAST_HALFH = EDGE_L;
 	
-	private final float ANIMATION_TIME = 1.2f;
+	private final float ANIMATION_TIME = 0.2f;
 	
 	private RectangleTexture backRectTexture;
 	
@@ -124,15 +124,20 @@ public class CutRectangle extends MultiObject {
     	changeAnimation.addAnimation(scale);
     	tempTexture.setAnimation(changeAnimation);
     	
+    	//±≥æ∞µ≠≥ˆ
+    	backRectTexture.setAnimation(FadeAnimation.fade(ANIMATION_TIME, 1, 0));
+    	upLayer.setInVec4(0, 0, HALF_W_BACK, HALF_H_BACK);
+    	upLayer.setAnimation(FadeAnimation.fade(ANIMATION_TIME, 0.5f, 0));
+    	
     	//±≥æ∞Õº∫Õ√…≤„¿≠…Ï∂Øª≠
-    	ComplexAnimation back = new ComplexAnimation(ANIMATION_TIME);
-    	back.addAnimation(MoveAnimation.moveTo(ANIMATION_TIME, new PointF(0, 0),
-    			new PointF(-tempTexture.getCenterX() * scaleX, -tempTexture.getCenterY()*scaleY)));
-    	back.addAnimation(scale);
-    	back.addAnimation(FadeAnimation.fade(ANIMATION_TIME, 1, 0));
-    	backRectTexture.setAnimation(back);
-    	upLayer.setInVec4(0, 0, 0, 0);
-    	upLayer.setAnimation(back);
+//    	ComplexAnimation back = new ComplexAnimation(ANIMATION_TIME);
+//    	back.addAnimation(MoveAnimation.moveTo(ANIMATION_TIME, new PointF(0, 0),
+//    			new PointF(-tempTexture.getCenterX() * scaleX, -tempTexture.getCenterY()*scaleY)));
+//    	back.addAnimation(scale);
+//    	back.addAnimation(FadeAnimation.fade(ANIMATION_TIME, 1, 0));
+//    	backRectTexture.setAnimation(back);
+//    	upLayer.setInVec4(0, 0, 0, 0);
+//    	upLayer.setAnimation(back);
     	
     	//≤√ºÙøÚ∂•µ„“∆∂Ø∂Øª≠
     	topLeft.setAnimation(MoveAnimation.moveTo(ANIMATION_TIME, 
