@@ -1,8 +1,6 @@
 package com.cwq.cut;
 
 import android.graphics.PointF;
-import android.opengl.GLES20;
-
 import com.cwq.animation.BaseAnimation;
 import com.cwq.animation.ComplexAnimation;
 import com.cwq.animation.FadeAnimation;
@@ -43,7 +41,7 @@ public class CutRectangle extends MultiObject {
 	private final float LEAST_HALFW = EDGE_L;
 	private final float LEAST_HALFH = EDGE_L;
 	
-	private final float ANIMATION_TIME = 0.2f;
+	private final float ANIMATION_TIME = 0.3f;
 	
 	private RectangleTexture backRectTexture;
 	
@@ -113,6 +111,12 @@ public class CutRectangle extends MultiObject {
 	}
 	
 	public void doCutAnimation(Scene myScene, RectangleTexture tempTexture, RectangleTexture finalTexture) {
+		float halfw = backRectTexture.getHalfW() > finalTexture.getHalfW() ? backRectTexture.getHalfW() : finalTexture.getHalfW();
+		float halfH = backRectTexture.getHalfH() > finalTexture.getHalfH() ? backRectTexture.getHalfH() : finalTexture.getHalfH();
+		myScene.setScissorRange(myScene.getWidth() * (1 - halfw / Scene.getHALF_W()) / 2,
+				myScene.getHeight() * (1 - halfH / Scene.getHALF_H()) / 2,
+				myScene.getWidth() * (halfw / Scene.getHALF_W()),
+				myScene.getHeight() * (halfH / Scene.getHALF_H()));
 		
 		//²Ã¼ôµÄÐ¡Í¼À­Éì¶¯»­
 		ComplexAnimation changeAnimation = new ComplexAnimation(ANIMATION_TIME);
@@ -124,20 +128,20 @@ public class CutRectangle extends MultiObject {
     	changeAnimation.addAnimation(scale);
     	tempTexture.setAnimation(changeAnimation);
     	
-    	//±³¾°µ­³ö
-    	backRectTexture.setAnimation(FadeAnimation.fade(ANIMATION_TIME, 1, 0));
-    	upLayer.setInVec4(0, 0, HALF_W_BACK, HALF_H_BACK);
-    	upLayer.setAnimation(FadeAnimation.fade(ANIMATION_TIME, 0.5f, 0));
+//    	//±³¾°µ­³ö
+//    	backRectTexture.setAnimation(FadeAnimation.fade(ANIMATION_TIME, 1, 0));
+//    	upLayer.setInVec4(0, 0, HALF_W_BACK, HALF_H_BACK);
+//    	upLayer.setAnimation(FadeAnimation.fade(ANIMATION_TIME, 0.5f, 0));
     	
     	//±³¾°Í¼ºÍÃÉ²ãÀ­Éì¶¯»­
-//    	ComplexAnimation back = new ComplexAnimation(ANIMATION_TIME);
-//    	back.addAnimation(MoveAnimation.moveTo(ANIMATION_TIME, new PointF(0, 0),
-//    			new PointF(-tempTexture.getCenterX() * scaleX, -tempTexture.getCenterY()*scaleY)));
-//    	back.addAnimation(scale);
-//    	back.addAnimation(FadeAnimation.fade(ANIMATION_TIME, 1, 0));
-//    	backRectTexture.setAnimation(back);
-//    	upLayer.setInVec4(0, 0, 0, 0);
-//    	upLayer.setAnimation(back);
+    	ComplexAnimation back = new ComplexAnimation(ANIMATION_TIME);
+    	back.addAnimation(MoveAnimation.moveTo(ANIMATION_TIME, new PointF(0, 0),
+    			new PointF(-tempTexture.getCenterX() * scaleX, -tempTexture.getCenterY()*scaleY)));
+    	back.addAnimation(scale);
+//    	back.addAnimation(FadeAnimation.fade(ANIMATION_TIME, 0.5f, 0));
+    	backRectTexture.setAnimation(back);
+    	upLayer.setInVec4(0, 0, 0, 0);
+    	upLayer.setAnimation(back);
     	
     	//²Ã¼ô¿ò¶¥µãÒÆ¶¯¶¯»­
     	topLeft.setAnimation(MoveAnimation.moveTo(ANIMATION_TIME, 
@@ -152,10 +156,11 @@ public class CutRectangle extends MultiObject {
     	bottomRight.setAnimation(MoveAnimation.moveTo(ANIMATION_TIME, 
     			new PointF(bottomRight.getCenterX(), bottomRight.getCenterY()),
     			new PointF(finalTexture.getHalfW(), -finalTexture.getHalfH())));
-    	while(bottomRight.isRunAnimation()) {
+    	while(backRectTexture.isRunAnimation()) {
     		
     	}
     	
+    	myScene.setScissorRange(0, 0, myScene.getWidth(), myScene.getHeight());
 	}
 	
 	/**

@@ -35,6 +35,8 @@ public class Scene extends GLSurfaceView {
 	private List<BaseObject> objects;
 
 	private float[] bgColor = {0.8f, 0.8f, 0.8f, 0.0f};   //a=0 Í¸Ã÷£¬ a=1 ²»Í¸Ã÷
+	
+	private int[] scissorRange = {0, 0, 0, 0}; //int x, int y, int width, int height
 
 	public Scene(Context context) {
 		super(context);
@@ -73,6 +75,8 @@ public class Scene extends GLSurfaceView {
 			// TODO Auto-generated method stub
 			Log.v(CutActivity.TAG, "onSurfaceChanged");
 			GLES20.glViewport(0, 0, width, height);
+			scissorRange[2] = width;
+			scissorRange[3] = height;
 			final float aspectRatio = width > height ?
 					(float) width / (float) height :
 					(float) height / (float) width;
@@ -93,6 +97,8 @@ public class Scene extends GLSurfaceView {
 			
 			GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 			
+			GLES20.glScissor(scissorRange[0], scissorRange[1], scissorRange[2], scissorRange[3]);
+			
 			TextureManager.loadTextures();
 			
 			synchronized (objects) {
@@ -111,7 +117,6 @@ public class Scene extends GLSurfaceView {
 		}
 		
 	}
-	
 
 	public static float getHALF_W() {
 		return HALF_W;
@@ -119,6 +124,13 @@ public class Scene extends GLSurfaceView {
 	
 	public static float getHALF_H() {
 		return HALF_H;
+	}
+	
+	public void setScissorRange(float leftX, float bottomY, float width, float height) {
+		scissorRange[0] = (int) leftX;
+		scissorRange[1] = (int) bottomY;
+		scissorRange[2] = (int) width;
+		scissorRange[3] = (int) height;
 	}
 	
 	@Override

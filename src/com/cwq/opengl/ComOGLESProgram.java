@@ -44,6 +44,9 @@ public class ComOGLESProgram extends OpenglESProgram{
 			GLES20.glEnable(GLES20.GL_BLEND);
 			GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
 			
+			//只对裁剪区域更新
+			GLES20.glEnable(GLES20.GL_SCISSOR_TEST);
+			
 			Log.v(CutActivity.TAG, "program: " + program);
 			
 			//深度缓存,确保当前片断确实比先前画的片断更近
