@@ -4,7 +4,6 @@ import com.cwq.object.BaseObject;
 
 public abstract class BaseAnimation {
 	
-	protected static final int FPS = 160;
 	protected float sDuration = 0;
 	protected boolean isRevert = false;
 	

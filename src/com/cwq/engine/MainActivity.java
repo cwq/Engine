@@ -81,13 +81,13 @@ public class MainActivity extends Activity {
 	
 	private void init() {
 		PointF startF = new PointF(rectangleTexture.getCenterX(), rectangleTexture.getCenterY());
-		BaseAnimation circleAnimation = MoveAnimation.circle(2.0f, 
-				startF, new PointF(0, 0), 0.5f);
-		circleAnimation.setRevert(true);
-		
-		BaseAnimation bezierAnimation = MoveAnimation.bezier(2.0f, startF,
-				new PointF(-1, 1), new PointF(1, 1), new PointF(1, 0));
-		bezierAnimation.setRevert(true);
+//		BaseAnimation circleAnimation = MoveAnimation.circle(2.0f, 
+//				startF, new PointF(0, 0), 0.5f);
+//		circleAnimation.setRevert(true);
+//		
+//		BaseAnimation bezierAnimation = MoveAnimation.bezier(2.0f, startF,
+//				new PointF(-1, 1), new PointF(1, 1), new PointF(1, 0));
+//		bezierAnimation.setRevert(true);
 		
 		BaseAnimation fadeOut = FadeAnimation.fade(2.0f, 1, 0);
 		fadeOut.setRevert(true);
@@ -124,7 +124,7 @@ public class MainActivity extends Activity {
 		
 		ComplexAnimation c3 = new ComplexAnimation(2.0f);
 		c3.setRevert(true);
-		c3.addAnimation(circleAnimation);
+//		c3.addAnimation(circleAnimation);
 		c3.addAnimation(tint);
 		c3.addAnimation(rotateAnimation);
 		animations.add(c3);
@@ -133,8 +133,8 @@ public class MainActivity extends Activity {
 		animations.add(scaleB);
 		animations.add(scaleS);
 		animations.add(tint);
-		animations.add(circleAnimation);
-		animations.add(bezierAnimation);
+//		animations.add(circleAnimation);
+//		animations.add(bezierAnimation);
 		animations.add(fadeIn);
 		animations.add(fadeOut);
 		animations.add(rotateAnimation);
