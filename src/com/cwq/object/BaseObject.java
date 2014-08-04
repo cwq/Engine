@@ -23,9 +23,14 @@ public abstract class BaseObject {
 	protected float[] color = {0.0f, 0.0f, 0.0f, 0.0f};
 	protected float alpha = 1;
 	/**
-	 * alpha作用区域centerx, centery, halfW, halfH, 相对于图形中心
+	 * alpha作用区域centerx, centery, halfW, halfH, 相对于图形中心,未乘变化矩阵前
 	 */
 	protected float[] inVec4 = {0, 0, 1, 1};
+	
+	/**
+	 * 图形显示区域centerx, centery, halfW, halfH, 乘变化矩阵后,屏幕坐标
+	 */
+	protected float[] showVec4 = {0, 0, 10, 10};
 	
 	protected int zOrder = 0;
 	
@@ -35,6 +40,13 @@ public abstract class BaseObject {
 
 	public void setzOrder(int zOrder) {
 		this.zOrder = zOrder;
+	}
+	
+	public void setShowVec4(float centerX, float centerY, float halfW, float halfH) {
+		showVec4[0] = centerX;
+		showVec4[1] = centerY;
+		showVec4[2] = halfW;
+		showVec4[3] = halfH;
 	}
 
 	/**

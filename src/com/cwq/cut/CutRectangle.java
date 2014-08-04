@@ -111,13 +111,6 @@ public class CutRectangle extends MultiObject {
 	}
 	
 	public void doCutAnimation(Scene myScene, RectangleTexture tempTexture, RectangleTexture finalTexture) {
-		float halfw = backRectTexture.getHalfW() > finalTexture.getHalfW() ? backRectTexture.getHalfW() : finalTexture.getHalfW();
-		float halfH = backRectTexture.getHalfH() > finalTexture.getHalfH() ? backRectTexture.getHalfH() : finalTexture.getHalfH();
-		myScene.setScissorRange(myScene.getWidth() * (1 - halfw / Scene.getHALF_W()) / 2,
-				myScene.getHeight() * (1 - halfH / Scene.getHALF_H()) / 2,
-				myScene.getWidth() * (halfw / Scene.getHALF_W()),
-				myScene.getHeight() * (halfH / Scene.getHALF_H()));
-		
 		//裁剪的小图拉伸动画
 		ComplexAnimation changeAnimation = new ComplexAnimation(ANIMATION_TIME);
     	changeAnimation.addAnimation(MoveAnimation.moveTo(ANIMATION_TIME, 
@@ -133,12 +126,17 @@ public class CutRectangle extends MultiObject {
 //    	upLayer.setInVec4(0, 0, HALF_W_BACK, HALF_H_BACK);
 //    	upLayer.setAnimation(FadeAnimation.fade(ANIMATION_TIME, 0.5f, 0));
     	
-    	//背景图和蒙层拉伸动画
+    	//设置显示范围，使放大在一定范围内
+    	float halfW = backRectTexture.getHalfW() > finalTexture.getHalfW() ? backRectTexture.getHalfW() : finalTexture.getHalfW();
+		float halfH = backRectTexture.getHalfH() > finalTexture.getHalfH() ? backRectTexture.getHalfH() : finalTexture.getHalfH();
+		backRectTexture.setShowVec4(0, 0, halfW, halfH);
+		upLayer.setShowVec4(0, 0, halfW, halfH);
+		
+		//背景图和蒙层拉伸动画
     	ComplexAnimation back = new ComplexAnimation(ANIMATION_TIME);
     	back.addAnimation(MoveAnimation.moveTo(ANIMATION_TIME, new PointF(0, 0),
     			new PointF(-tempTexture.getCenterX() * scaleX, -tempTexture.getCenterY()*scaleY)));
     	back.addAnimation(scale);
-//    	back.addAnimation(FadeAnimation.fade(ANIMATION_TIME, 0.5f, 0));
     	backRectTexture.setAnimation(back);
     	upLayer.setInVec4(0, 0, 0, 0);
     	upLayer.setAnimation(back);
@@ -160,7 +158,9 @@ public class CutRectangle extends MultiObject {
     		
     	}
     	
-    	myScene.setScissorRange(0, 0, myScene.getWidth(), myScene.getHeight());
+//    	//显示范围设置回
+//    	backRectTexture.setShowVec4(0, 0, 10, 10);
+//		upLayer.setShowVec4(0, 0, 10, 10);
 	}
 	
 	/**

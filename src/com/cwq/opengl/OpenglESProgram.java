@@ -13,6 +13,8 @@ public abstract class OpenglESProgram {
 	protected int colorLocation;
 	protected int alphaLocation;
 	protected int inVec4Location;
+	protected int showVec4Location;
+	protected int changeMatrixLocation;
 	
 	protected static final String vertexString = "a_position";
 	protected static final String matrixString = "u_Matrix";
@@ -21,6 +23,8 @@ public abstract class OpenglESProgram {
 	protected static final String colorString = "u_color";
 	protected static final String alphaString = "u_alpha";
 	protected static final String inVec4String = "u_inVec4";
+	protected static final String showVec4String = "u_showVec4";
+	protected static final String changeMatrixString = "u_changeMatrix";
 	
 	protected float[] mProjMatrix = new float[16]; //Õ∂”∞æÿ’Û
 	protected float[] mVMatrix = new float[16]; // ”Õºæÿ’Û
@@ -72,6 +76,14 @@ public abstract class OpenglESProgram {
 	
 	public int getInVec4Location() {
 		return inVec4Location;
+	}
+
+	public int getShowVec4Location() {
+		return showVec4Location;
+	}
+
+	public int getChangeMatrixLocation() {
+		return changeMatrixLocation;
 	}
 
 	public float[] getmProjMatrix() {

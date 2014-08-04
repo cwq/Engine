@@ -40,6 +40,8 @@ public class ComOGLESProgram extends OpenglESProgram{
 			textureCoordinatesLocation = GLES20.glGetAttribLocation(program, textureCoordinatesString);
 			textureUnitLocation = GLES20.glGetUniformLocation(program, textureUnitString);
 			inVec4Location = GLES20.glGetUniformLocation(program, inVec4String);
+			showVec4Location = GLES20.glGetUniformLocation(program, showVec4String);
+			changeMatrixLocation = GLES20.glGetUniformLocation(program, changeMatrixString);
 			
 			GLES20.glEnable(GLES20.GL_BLEND);
 			GLES20.glBlendFunc(GLES20.GL_SRC_ALPHA, GLES20.GL_ONE_MINUS_SRC_ALPHA);
@@ -60,14 +62,17 @@ public class ComOGLESProgram extends OpenglESProgram{
 	
 	private static final String vertexShaderString = 
 			"uniform mat4 " + matrixString + ";" +
+			"uniform mat4 " + changeMatrixString + ";" +
 			"attribute vec4 " + vertexString + ";" +
 		    "attribute vec2 " + textureCoordinatesString + ";" +
 		    "varying vec2 v_TextureCoordinates;" +
-		    "varying vec4 v_position;" +
+		    "varying vec4 v_originalPosition;" +
+		    "varying vec4 v_changedPosition;" +
 		    "void main() {" +
-		    "  v_position = " + vertexString + ";" +
+		    "  v_originalPosition = " + vertexString + ";" +
 		    "  v_TextureCoordinates = " + textureCoordinatesString + ";" +
 		    "  gl_Position = " + matrixString + " * " + vertexString + ";" +
+		    "  v_changedPosition = " + changeMatrixString + " * " + vertexString + ";" +
 		    "  gl_PointSize = 10.0;" +
 		    "}";
 	
@@ -77,19 +82,27 @@ public class ComOGLESProgram extends OpenglESProgram{
 		    "uniform vec4 " + colorString + ";" +
 		    "uniform float " + alphaString + ";" +
 		    "uniform vec4 " + inVec4String + ";" +
+		    "uniform vec4 " + showVec4String + ";" +
 		    "varying vec2 v_TextureCoordinates;" +
-		    "varying vec4 v_position;" +
+		    "varying vec4 v_originalPosition;" +
+		    "varying vec4 v_changedPosition;" +
 		    "void main() {" +
-		    "  gl_FragColor = texture2D(" + textureUnitString + ", v_TextureCoordinates) + " + colorString + ";" +
+		    "  if((v_changedPosition.x >= " + showVec4String+".x - " + showVec4String + ".z)" +
+		    "  && (v_changedPosition.x <= " + showVec4String+".x + " + showVec4String + ".z)" +
+		    "  && (v_changedPosition.y >= " + showVec4String+".y - " + showVec4String + ".w)" +
+		    "  && (v_changedPosition.y <= " + showVec4String+".y + " + showVec4String + ".w)" +
+		    "  ) {" +
+		    "    gl_FragColor = texture2D(" + textureUnitString + ", v_TextureCoordinates) + " + colorString + ";" +
 		    "  if((" + colorString + ".w != 0.0)) " +
 		    "    gl_FragColor.a = " + colorString + ".w;" +
 		    "  if((gl_FragColor.a != 0.0) " +
-		    "  && (v_position.x >= " + inVec4String+".x - " + inVec4String + ".z)" +
-		    "  && (v_position.x <= " + inVec4String+".x + " + inVec4String + ".z)" +
-		    "  && (v_position.y >= " + inVec4String+".y - " + inVec4String + ".w)" +
-		    "  && (v_position.y <= " + inVec4String+".y + " + inVec4String + ".w)" +
+		    "  && (v_originalPosition.x >= " + inVec4String+".x - " + inVec4String + ".z)" +
+		    "  && (v_originalPosition.x <= " + inVec4String+".x + " + inVec4String + ".z)" +
+		    "  && (v_originalPosition.y >= " + inVec4String+".y - " + inVec4String + ".w)" +
+		    "  && (v_originalPosition.y <= " + inVec4String+".y + " + inVec4String + ".w)" +
 		    "  )" +
 		    "    gl_FragColor.a = " + alphaString + ";" +
+		    "  }" + 
 		    "}";
 
 }

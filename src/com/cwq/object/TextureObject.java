@@ -56,11 +56,16 @@ public abstract class TextureObject extends BaseObject {
 		
 		GLES20.glUniform4fv(openglESProgram.getInVec4Location(), 1, inVec4, 0);
 		
+		GLES20.glUniform4fv(openglESProgram.getShowVec4Location(), 1, showVec4, 0);
+		
 		float[] tempMatrix = new float[16];
 		float[] complexMatrix = new float[16];
 		float[] finalMatrix = new float[16];
 		Matrix.multiplyMM(tempMatrix, 0, mrotateMatrix, 0, mscaleMatrix, 0);
 		Matrix.multiplyMM(complexMatrix, 0, mtransMatrix, 0, tempMatrix, 0);
+		
+		GLES20.glUniformMatrix4fv(openglESProgram.getChangeMatrixLocation(), 1, false, complexMatrix, 0);
+		
 		Matrix.multiplyMM(finalMatrix, 0, openglESProgram.getmMVPMatrix(), 0, complexMatrix, 0);
 		// 应用投影和视口变换
 		GLES20.glUniformMatrix4fv(openglESProgram.getMatrixLocation(), 1, false, finalMatrix, 0);
