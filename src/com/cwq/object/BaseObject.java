@@ -157,8 +157,12 @@ public abstract class BaseObject {
 	}
 	
 	protected void setGLBuffer() {
-		glBuffer = ByteBuffer.allocateDirect(attribute.length * FLOAT_BYTE)
-				.order(ByteOrder.nativeOrder()).asFloatBuffer();
+		if (glBuffer == null) {
+			glBuffer = ByteBuffer.allocateDirect(attribute.length * FLOAT_BYTE)
+					.order(ByteOrder.nativeOrder()).asFloatBuffer();
+		} else {
+			glBuffer.clear();
+		}
 		glBuffer.put(attribute);
 	}
 	
