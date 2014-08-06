@@ -5,7 +5,6 @@ import com.cwq.object.RectangleTexture;
 import com.cwq.scene.Scene;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;

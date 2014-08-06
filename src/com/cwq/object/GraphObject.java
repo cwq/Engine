@@ -30,6 +30,9 @@ public abstract class GraphObject extends BaseObject {
 		glBuffer.position(0);
 		GLES20.glVertexAttribPointer(openglESProgram.getVertexLocation(), POINT_DIMENSION, GLES20.GL_FLOAT, false, STRIDE, glBuffer);
 		
+		glBuffer.position(POINT_DIMENSION);
+		GLES20.glVertexAttribPointer(openglESProgram.getTextureCoordinatesLocation(), UV_DIMENSION, GLES20.GL_FLOAT, false, STRIDE, glBuffer);
+		
 		GLES20.glEnableVertexAttribArray(openglESProgram.getVertexLocation());
 		GLES20.glEnableVertexAttribArray(openglESProgram.getTextureCoordinatesLocation());
 		

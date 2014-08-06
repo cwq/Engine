@@ -2,7 +2,6 @@ package com.cwq.object;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import com.cwq.engine.CutActivity;
 import com.cwq.opengl.OpenglESProgram;
 import com.cwq.opengl.TextureManager;
 import com.cwq.scene.Scene;
