@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import com.cwq.engine.CutActivity;
 import com.cwq.opengl.OpenglESProgram;
 import com.cwq.opengl.TextureManager;
+import com.cwq.scene.Scene;
 
 public class RectangleTexture extends TextureObject {
 	
@@ -30,7 +31,7 @@ public class RectangleTexture extends TextureObject {
 	private void setWH(int bitmapID, float startU, float startV, float endU, float endV) {
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inScaled = false;
-		Bitmap bitmap = BitmapFactory.decodeResource(CutActivity.getContext().getResources(), bitmapID, options);
+		Bitmap bitmap = BitmapFactory.decodeResource(Scene.getMContext().getResources(), bitmapID, options);
 		
 		halfW = halfH = BASE_L;
 		if (bitmapID != NO_BITMAP && bitmap != null) {

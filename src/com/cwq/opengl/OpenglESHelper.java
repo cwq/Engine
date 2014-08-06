@@ -1,6 +1,8 @@
 package com.cwq.opengl;
 
 import com.cwq.engine.CutActivity;
+import com.cwq.scene.Scene;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLES20;
@@ -34,7 +36,7 @@ public class OpenglESHelper {
 	static int createTexture(int bitmapID) throws Exception {
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inScaled = false;
-		Bitmap bitmap = BitmapFactory.decodeResource(CutActivity.getContext().getResources(), bitmapID, options);
+		Bitmap bitmap = BitmapFactory.decodeResource(Scene.getMContext().getResources(), bitmapID, options);
 		if (bitmap == null) {
 			Log.v(CutActivity.TAG, "null bitmap");
 			return 0;

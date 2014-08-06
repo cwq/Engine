@@ -7,7 +7,7 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import com.cwq.engine.CutActivity;
-import com.cwq.engine.MainActivity;
+import com.cwq.engine.AnimationActivity;
 import com.cwq.object.BaseObject;
 import com.cwq.opengl.ComOGLESProgram;
 import com.cwq.opengl.OpenglESProgram;
@@ -18,6 +18,7 @@ import android.graphics.PixelFormat;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.util.Log;
+import android.view.SurfaceHolder;
 
 public class Scene extends GLSurfaceView {
 	
@@ -29,7 +30,10 @@ public class Scene extends GLSurfaceView {
 	private static final int B_INDEX = 2;
 	private static final int A_INDEX = 3;
 	
-	private Context mContext;
+	private static Context mContext;
+	public static Context getMContext() {
+		return mContext;
+	}
 	private OpenglESProgram openglESProgram;
 	//按照zOrder从小到大 越大显示越前
 	private List<BaseObject> objects;
@@ -48,6 +52,13 @@ public class Scene extends GLSurfaceView {
 		objects = new ArrayList<BaseObject>();
 
 		super.setRenderer(new SceneRenderer());
+	}
+	
+	@Override
+	public void surfaceDestroyed(SurfaceHolder holder) {
+		// TODO Auto-generated method stub
+		super.surfaceDestroyed(holder);
+		clear();
 	}
 	
 	int framesPerSecond = 0;
@@ -110,7 +121,7 @@ public class Scene extends GLSurfaceView {
 			
 			framesPerSecond++;
 			if (curTime - lastTimeFrame > NANO_SECOND) {
-				Log.v(MainActivity.TAG, framesPerSecond + "");
+				Log.v(AnimationActivity.TAG, framesPerSecond + "");
 				framesPerSecond = 0;
 				lastTimeFrame = curTime;
 			}

@@ -19,11 +19,6 @@ public class CutActivity extends Activity {
 	
 	public static final String TAG = "CutActivity";
 	
-	private static Context mContext;
-	public static Context getContext() {
-		return mContext;
-	}
-	
 	private Scene myScene;
 	
 	private RectangleTexture backRectTexture;
@@ -38,7 +33,6 @@ public class CutActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		Log.v(CutActivity.TAG, "onCreate");
 		super.onCreate(savedInstanceState);
-		mContext = this;
 		myScene = new Scene(this);
 		myScene.setOnTouchListener(new OnTouchListener() {
 			@Override

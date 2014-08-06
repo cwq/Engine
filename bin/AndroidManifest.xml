@@ -17,18 +17,29 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <activity
-            android:name="com.cwq.engine.CutActivity"
-            android:label="@string/app_name"
-            android:configChanges="orientation|screenSize" >
+        <activity 
+            android:name="com.cwq.engine.MainActivity"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.cwq.engine.CutActivity"
+            android:label="@string/cut"
+            android:configChanges="orientation|screenSize" >
+
+        </activity>
         <activity 
-            android:name="com.cwq.engine.MainActivity">
+            android:name="com.cwq.engine.AnimationActivity"
+            android:label="@string/animation" >
+            
+        </activity>
+        <activity 
+            android:name="com.cwq.engine.SVGActivity"
+            android:label="@string/svg" >
             
         </activity>
     </application>
